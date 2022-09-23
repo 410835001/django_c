@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="en">
+ <head>
+  <title>顯示所有資料</title>
+ </head>
+ <body>
+
+    <div id="Btn" onclick="trylogout()"><button id="logout_b1">登出</button></div>
+    <div class="alert" id="textlistn" style="display:none;">
+        {% for msg in messages %}{{ msg.message }}{% endfor %}
+        <button type="submit" id="logout_b2"> <a href="/logout/">登出</a></button>
+        <span class="closebtn" onclick="trylogout()">&times;</span>
+    </div>
+
+    {% if request.user.type == 1 %}
+        <h1>夥伴頁面</h1>
+        <div style="display: flex;">
+            <button type="submit"><a href="/list/">夥伴清單</a></button>
+        </div>
+        <div style="margin: 10px 0 0 0;">
+            <h3>夥伴資訊</h3>
+            <p>帳號：{{ request.user.username }}</p>
+            <p>名稱：{{ request.user.last_name }}</p>
+            <p>地址：{{ request.user.address}}</p>
+            <p>統一編號：{{ request.user.tax_ID_number }}</p>
+            <p>電子信箱：{{ request.user.email }}</p>
+            <p>電話號碼：{{ request.user.phone_number }}</p>
+
+            <div style="display: flex;">
+                <button type="submit"> <a href="/text/">更新資料</a></button>
+                <div id="Btn2" onclick="trydelete()"><button id="delete_1">刪除夥伴</button></div>
+                <div class="alert" id="textlistn2" style="display:none;">
+                    {% for msg in messages %}{{ msg.message }}{% endfor %}
+                    <button type="submit" id="delete_b2"> <a href='delete_user/'>刪除</a></button>
+                    <span class="closebtn" onclick="trydelete()">&times;</span>
+                </div>
+            </div>
+
+            {% if request.user.is_staff %}
+                {% for user in user_list %}
+                    <li>{{ user.username}}</li>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+    {% if request.user.type == 0 %}
+        <h1>會員頁面</h1>
+        <div style="margin: 10px 0 0 0;">
+            <h3>會員資訊</h3>
+            <p>帳號：{{ request.user.username }}</p>
+            <p>名稱：{{ request.user.last_name }}</p>
+            <p>電子信箱：{{ request.user.email }}</p>
+            <p>生日：{{ request.user.date_of_birth }}</p>
+            {% if request.user.gender == 0 %}
+                <p>性別：生理女</p>
+            {% endif %}
+            {% if request.user.gender == 1 %}
+                <p>性別：生理男</p>
+            {% endif %}
+            <p>電話號碼：{{ request.user.phone_number }}</p>
+
+            <div style="display: flex;">
+                <button>我的蒐藏</button>
+                <button type="submit"> <a href="/text/">更新資料</a></button>
+                <div id="Btn3" onclick="trydelete2()"><button id="delete_2">刪除會員</button></div>
+                <div class="alert" id="textlistn3" style="display:none;">
+                    {% for msg in messages %}{{ msg.message }}{% endfor %}
+                    <button type="submit" id="delete_b3"> <a href='delete_user/'>刪除</a></button>
+                    <span class="closebtn" onclick="trydelete2()">&times;</span>
+                </div>
+            </div>
+
+        </div>
+    {% endif %}
+    <script>
+        function trylogout(){
+            var Btn = document.getElementById('Btn');
+            var textlistn = document.getElementById('textlistn');
+            if (textlistn.style.display === 'none') {
+                textlistn.style.display = 'block';
+                Btn.style.display = 'none';
+            }
+            else {
+                textlistn.style.display = 'none';
+                Btn.style.display = 'block';
+            }
+        }
+
+        function trydelete(){
+            var Btn2 = document.getElementById('Btn2');
+            var textlistn2 = document.getElementById('textlistn2');
+            if (textlistn2.style.display === 'none') {
+                textlistn2.style.display = 'block';
+                Btn2.style.display = 'none';
+            }
+            else {
+                textlistn2.style.display = 'none';
+                Btn2.style.display = 'block';
+            }
+        }
+
+        function trydelete2(){
+            var Btn3 = document.getElementById('Btn3');
+            var textlistn3 = document.getElementById('textlistn3');
+            if (textlistn3.style.display === 'none') {
+                textlistn3.style.display = 'block';
+                Btn3.style.display = 'none';
+            }
+            else {
+                textlistn3.style.display = 'none';
+                Btn3.style.display = 'block';
+            }
+        }
+    </script>
+
+<!--  <h2>會員資料</h2>-->
+<!--     <p> 帳號: {{ request.user.username }}</p>-->
+<!--     <p> 電子郵件: {{ request.user.email }}</p>-->
+<!--     <p> 生日: {{ request.user.date_of_birth }}</p>-->
+<!--         {% if request.user.gender == 0 %}-->
+<!--     <p> 性別: 生理女 </p>-->
+<!--         {% else %}-->
+<!--     <p> 性別: 生理男 </p>-->
+<!--         {% endif %}-->
+<!--     <p> 電話號碼: {{ request.user.phone_number }}</p>-->
+<!--  <button type="submit"><a href ="/text/">會員資料修改</a></button><button type="submit"><a href ="/collect/">我的最愛</a></button><button type="submit"><a href ="/logout/">登出</a></button>-->
+ </body>
+</html>
+{% endblock %}

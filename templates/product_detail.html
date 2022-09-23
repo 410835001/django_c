@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="display: flex;">
+        <div style="justify-content: space-between; display: flex;"> <!-- 圖片 -->
+            {% if object.picture %}
+                <img style="margin:auto; display:block; width:500px;" src="{{ object.picture.url }}"><br/>
+            {% else %}
+                <p>圖片 | 尚無圖片</p><br/>
+            {% endif %}
+        </div>
+
+        <hr class="line">
+
+
+        <div style="justify-content:space-between;">
+            <div>
+                <h1>{{ object.product_name }}</h1>
+                <p>品牌 | {{ object.brand.brand_name }}</p>
+                <p>商品編號 | {{ object.brand.id }}.{{ object.id }}</p>
+                <div class="link-middle"></div>
+                <p>材質與顏色 | {{ object.material_color }}</p>
+                <p>敘述 | {{ object.description }}</p>
+                <p>價格 | NT$. {{ object.price }}</p>
+                {% if object.threeD_model %}
+                    <div>
+                        3D模型 | 已有3D模型<br/>
+                    </div>
+                {% else %}
+                    <p>3D模型 | 尚無3D模型（無法進行模擬配戴）</p><br/>
+                {% endif %}
+
+                {% if request.user.type == 1 %}  <!-- 廠商 -->
+                <button type="submit"> <a href='/list/'> 回到清單 </a></button>
+                {% if object.threeD_model %}
+                    <button type="submit"> <a href='3D_js./'> 模擬配戴 </a></button>
+                {% endif %}
+                <button type="submit"> <a href='update/'> 更新 </a></button>
+                <button type="submit"> <a href='delete/'> 刪除 </a></button>
+
+                {% elif request.user.type == 0 %}  <!-- 消費者 -->
+                    <form action='.' method='POST'>{% csrf_token %}
+            {#                {{ form }} 動手腳#}
+                        <input type='submit' class="input_button" value='加入蒐藏'/>
+                    </form>
+                    {% if object.threeD_model %}
+                        <button type="submit"> <a href='3D_js/'> 模擬配戴 </a></button>
+                    {% endif %}
+
+                    <button type="submit"> <a href='../../Brand/{{ object.brand.id }}/'> 品牌資訊 </a></button>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

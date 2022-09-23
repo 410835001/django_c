@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<body>
+    <h1>歡迎蒞臨 愛不釋手</h1>
+    <p>誠摯歡迎您使用本網站 敬祝使用愉快</p><br/>
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if forloop.counter <= 4 and instance.picture != Null %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="/media/{{ instance.picture }}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+
+                    {% if request.user.type == 0 %}  <!-- 消費者 -->
+                    <div style="display: flex;">
+                        <button class="HomeButton">模擬配戴</button>
+                        <button class="HomeButton">加入蒐藏</button>
+                    </div>
+                    {% elif request.user.type == 1 %} <!-- 廠商 -->
+                        <button class="HomeButton">模擬配戴</button>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if 5 <= forloop.counter and forloop.counter <= 8 %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="/media/{{ instance.picture }}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+                    {% if request.user.type == 0 %}  <!-- 消費者 -->
+                    <div style="display: flex;">
+                        <button class="HomeButton">模擬配戴</button>
+                        <button class="HomeButton">加入蒐藏</button>
+                    </div>
+                    {% elif request.user.type == 1 %} <!-- 廠商 -->
+                        <button class="HomeButton">模擬配戴</button>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+
+<div class="pagesize">
+    {% for instance in object_list %}
+            {% if 9 <= forloop.counter and forloop.counter <= 12 %}
+                <div class ="size">
+                    <a href ='{{ instance.get_absolute_url }}'>
+                        <div class="forimage">
+                            <img src="/media/{{ instance.picture }}">
+                        </div >
+                        <div style="margin: 50px 0 0 0 ;">
+                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>
+                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>
+                        </div>
+                    </a>
+                    {% if request.user.type == 0 %}  <!-- 消費者 -->
+                    <div style="display: flex;">
+                        <button class="HomeButton">模擬配戴</button>
+                        <button class="HomeButton">加入蒐藏</button>
+                    </div>
+                    {% elif request.user.type == 1 %} <!-- 廠商 -->
+                        <button class="HomeButton">模擬配戴</button>
+                    {% endif %}
+                </div>
+            {% endif %}
+    {% endfor %}
+</div>
+{% endblock %}
